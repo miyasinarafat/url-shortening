@@ -1,0 +1,56 @@
+version: '3'
+services:
+    mysql:
+        image: 'mysql:8.0'
+        container_name: am-mysql
+        working_dir: /var/www/html
+        volumes:
+            - 'am-mysql:/var/www/html'
+            - ./docker/mysql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=url_shortening
+            - MYSQL_USER=users
+            - MYSQL_PASSWORD=password
+        ports:
+            - '3307:3306'
+        networks:
+          - app
+    application:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      image: am-8.2/app
+      container_name: am-web
+      extra_hosts:
+        - 'host.docker.internal:host-gateway'
+      ports:
+        - '82:8000'
+      environment:
+        WWWUSER: '1000'
+      volumes:
+        - '.:/var/www/html'
+      hostname: am-web
+      networks:
+        - app
+      depends_on:
+        - mysql
+        - redis
+    redis:
+      image: 'redis:latest'
+      container_name: am-redis
+      ports:
+        - '6369:6369'
+        - '6379:6379'
+      volumes:
+        - 'am-redis:/data'
+      networks:
+        - app
+networks:
+  app:
+    driver: bridge
+volumes:
+  am-mysql:
+    driver: local
+  am-redis:
+    driver: local
