@@ -28,7 +28,8 @@ The PHP application will be up and running to this address: http://localhost:82/
 ```bash
 docker compose exec application composer test
 ```
-<img width="876" alt="image" src="https://github.com/miyasinarafat/articles-database-rest-api/assets/16781160/49175824-0f14-4aad-977f-01d1360b3e24">
+![305182207-49175824-0f14-4aad-977f-01d1360b3e24 (1)](https://github.com/miyasinarafat/url-shortening/assets/16781160/a2021043-1f8e-48ee-9119-a6743c19bbff)
+
 
 ## Summery
 This PHP application is unitizing `Layered Architecture` with `MVC pattern` also tried to maintain `SOLID` principles and `Docker Compose` to run PHP application with MySQL, & Redis(Queue & Cache).
